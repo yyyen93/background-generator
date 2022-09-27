@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Background Generator</title>
+</head>
+
+<body id="gradient">
+    <h1>Color Background Generator</h1>
+    <input type="color" id="color1" value="#435B80">
+    <input type="color" id="color2" value="#F1793D">
+    <h2>Current Color Background</h2>
+    <h3></h3>
+    <button id="random">Random</button>
+
+    <script>
+        let body = document.querySelector('#gradient');
+        let color1 = document.querySelector('#color1');
+        let color2 = document.querySelector('#color2');
+        let show = document.querySelector('h3');
+        let random = document.querySelector('#random');
+
+        function setGradient() {
+            body.style.background =
+                "linear-gradient(to right," +
+                color1.value +
+                "," +
+                color2.value +
+                ")";
+
+            show.textContent = body.style.background + ";";
+        }
+
+        // set on page load background color
+        setGradient();
+
+        //function for random number generation
+        function numberGenerator() {
+            return Math.round(Math.random() * 255);
+        };
+
+        //function for convert number to hexadecimal base 16
+        function toHex() {
+            let hex = numberGenerator().toString(16);
+            if (hex.length < 2) {
+                hex = "0" + hex;
+            }
+            return hex;
+        }
+
+        // function that use hex to become random color
+        function rgbToHex() {
+            let hex = "#" + toHex() + toHex() + toHex();
+            return hex;
+        }
+
+        random.addEventListener('click', function () {
+            color1.value = rgbToHex();
+            color2.value = rgbToHex();
+            setGradient();
+        });
+
+        color1.addEventListener('click', setGradient);
+        color2.addEventListener('click', setGradient);
+    </script>
+</body>
+
+</html>
